@@ -23,12 +23,6 @@ public class TrainerAuthController {
 
 	@Autowired
 	private TrainerService service;
-//	
-//	@Autowired
-//	private JWTTokenGeneratorUtil jwt;
-//	
-//	@Autowired
-//	private AuthenticationManager authenticationManager;
 
 	@PostMapping("/signup")
 	public ResponseEntity<SignUpDTO> signupUser(@RequestBody SignUpDTO signupDto) {
@@ -42,9 +36,7 @@ public class TrainerAuthController {
 			Trainer user = new Trainer();
 
 			user.setUsername(signupDto.getUsername());
-			// user.setPassword(passEncoder.encode(signupDto.getPassword()));
 			user.setPassword(signupDto.getPassword());
-			// user.setRoles(getRoles(signupDto.getRoles()));
 			repo.save(user);
 
 			return new ResponseEntity<SignUpDTO>(signupDto, HttpStatus.OK);
@@ -62,19 +54,5 @@ public class TrainerAuthController {
 			return new ResponseEntity<String>("Search Data Not Found", HttpStatus.NOT_FOUND);
 		}
 	}
-	
-//	@PostMapping("/signin")
-//	public ResponseEntity<JwtAuthResponse> authenticateUser(
-//			@RequestBody Trainer trainer) {
-//
-//		Authentication authentication = authenticationManager
-//				.authenticate(new UsernamePasswordAuthenticationToken(trainer.getUsername(), trainer.getPassword()));
-//
-//		SecurityContextHolder.getContext().setAuthentication(authentication);
-//		String token = jwt.JwtTokenProviderData(authentication);
-//
-//		return ResponseEntity.ok(new JwtAuthResponse(token, "Bearer"));
-//
-//	}
 
 }

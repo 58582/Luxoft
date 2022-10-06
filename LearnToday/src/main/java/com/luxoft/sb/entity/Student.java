@@ -25,7 +25,6 @@ public class Student {
 	private int enrollmentId;
 	
 	private int studentId;
-	//private int courseId;
 	
 	@JsonBackReference
 	@ManyToOne

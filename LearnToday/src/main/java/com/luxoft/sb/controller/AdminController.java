@@ -28,7 +28,6 @@ public class AdminController {
 		return new ResponseEntity<Course>(savedCourse, HttpStatus.CREATED);
 	}
 
-	//@PreAuthorize("hasAnyRole('ADMIN','STUDENT')")
 	@GetMapping
 	public List<Course> getAllCourses() {
 		return courseService.getAllCourses();
