@@ -31,6 +31,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
 	@Autowired
 	private PasswordEncoder passwordEncoder;	
 	
+	private static final String[] AUTH_WHITELIST = {
+	        "/authenticate",
+	        "/swagger-resources/**",
+	        "/swagger-ui/**",
+	        "/v2/api-docs",
+	        "/swagger-ui.html",
+	        "/webjars/**"
+	};
+	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.cors()
@@ -41,8 +50,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
 			.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 			.and()
 			.authorizeRequests()
-			.antMatchers("/signin","/signup")
-			.permitAll()
+			.antMatchers("/signin","/signup","/swagger-ui/**").permitAll()
 			.anyRequest()
 			.authenticated();
 		http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
@@ -56,6 +64,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
 	
 	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
 		auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder);
+	}
+	
+	@Override
+	public void configure(WebSecurity web) throws Exception {
+		web.ignoring().mvcMatchers(HttpMethod.OPTIONS, "/**");
+		web.ignoring().mvcMatchers(AUTH_WHITELIST);
 	}
 
 }

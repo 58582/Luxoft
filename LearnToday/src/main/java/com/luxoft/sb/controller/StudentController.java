@@ -18,14 +18,19 @@ import com.luxoft.sb.entity.Course;
 import com.luxoft.sb.entity.Student;
 import com.luxoft.sb.service.StudentService;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+
 @RestController
 @RequestMapping("/api/Student")
+@Api(value = "CRUD Rest APIs for Student resources")
 public class StudentController {
 	@Autowired
 	private StudentService studentService;
 	@Autowired
 	private StudentRepository studentRepo;
 	
+	@ApiOperation(value = "Post Student REST API")
 	@PostMapping
 	public ResponseEntity<Student> postStudent(@RequestBody Student student) {
 		Student savedStudent;
@@ -33,12 +38,14 @@ public class StudentController {
 		return new ResponseEntity<Student>(savedStudent, HttpStatus.CREATED);
 	}
 	
+	@ApiOperation(value = "Get All Courses REST API")
 	@GetMapping
 	public List<Course> getAllCourse() {
 		List<Course> studentList = studentRepo.findAllCourses();
 		return studentList;
 	}
 	
+	@ApiOperation(value = "Delete  Student By Id REST API")
 	@DeleteMapping("{enrollmentId}")
 	public ResponseEntity<String> deleteStudentEnrollment(@PathVariable int enrollmentId) {	
 		try {

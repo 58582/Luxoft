@@ -15,8 +15,12 @@ import com.luxoft.sb.entity.SignUpDTO;
 import com.luxoft.sb.entity.Trainer;
 import com.luxoft.sb.service.TrainerService;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+
 @RestController
 @RequestMapping("api/Trainer")
+@Api(value = "Trainer Controller for signup and update REST API")
 public class TrainerAuthController {
 	@Autowired
 	private TrainerRepoistory repo;
@@ -24,6 +28,7 @@ public class TrainerAuthController {
 	@Autowired
 	private TrainerService service;
 
+	@ApiOperation(value = "Signup Trainer REST API")
 	@PostMapping("/signup")
 	public ResponseEntity<SignUpDTO> signupUser(@RequestBody SignUpDTO signupDto) {
 
@@ -45,6 +50,7 @@ public class TrainerAuthController {
 		}
 	}
 
+	@ApiOperation(value = "Update Trainer Pass REST API")
 	@PutMapping("/{id}")
 	public ResponseEntity<String> updatePass(@PathVariable int id, @RequestBody Trainer trainer) {
 		try {

@@ -18,8 +18,12 @@ import com.luxoft.sb.entity.UserDTO;
 import com.luxoft.sb.security.JwtUserDetailsService;
 import com.luxoft.sb.util.JwtTokenUtil;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+
 @RestController
 @CrossOrigin
+@Api(value = "Auth controller exposes siginin and signup REST APIs")
 public class JwtAuthenticationController {
 	@Autowired
 	private AuthenticationManager authenticationManager;
@@ -30,6 +34,7 @@ public class JwtAuthenticationController {
 	@Autowired
 	private JwtUserDetailsService jwtUserDetailsService;
 
+	@ApiOperation(value = "REST API to Signin or Login user to LearnToday app")
 	@PostMapping("/signin")
 	public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtRequest authenticationRequest) throws Exception {
 		authenticate(authenticationRequest.getUsername(), authenticationRequest.getPassword());
@@ -51,6 +56,7 @@ public class JwtAuthenticationController {
 		}
 	}
 
+	@ApiOperation(value = "REST API to signup user to LearnToday app")
 	@PostMapping("/signup")
 	public ResponseEntity<?> saveUser(@RequestBody UserDTO user) {
 		return ResponseEntity.ok(jwtUserDetailsService.save(user));
