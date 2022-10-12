@@ -31,4 +31,11 @@ public class Student {
 	@JoinColumn(name="course_id")
 	private Course course;
 
+	public Student(int studentId, Course course) {
+		super();
+		this.studentId = studentId;
+		this.course = course;
+	}
+	
+
 }

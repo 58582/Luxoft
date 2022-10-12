@@ -19,5 +19,12 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler{
 			return new ResponseEntity<ErrorDetials>(errorDetails,HttpStatus.NOT_FOUND);
 			
 		}
+		
+		@ExceptionHandler(value = ResourceExistsException.class)
+		public ResponseEntity<ErrorDetials> handleResourceException(ResourceExistsException exception){
+			
+			ErrorDetials apiError = new ErrorDetials(exception.getMessage());
+			return ResponseEntity.status(HttpStatus.ALREADY_REPORTED).body(apiError);
+		}
 
 }

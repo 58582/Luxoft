@@ -23,4 +23,5 @@ public class Trainer {
 	private String username;
 	
 	private String password;
+
 }

@@ -2,6 +2,8 @@ package com.luxoft.sb.controller;
 
 import java.util.List;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +27,7 @@ import io.swagger.annotations.ApiOperation;
 @RequestMapping("/api/Student")
 @Api(value = "CRUD Rest APIs for Student resources")
 public class StudentController {
+	private static final Log LOGGER = LogFactory.getLog(StudentController.class);
 	@Autowired
 	private StudentService studentService;
 	@Autowired
@@ -33,8 +36,8 @@ public class StudentController {
 	@ApiOperation(value = "Post Student REST API")
 	@PostMapping
 	public ResponseEntity<Student> postStudent(@RequestBody Student student) {
-		Student savedStudent;
-		savedStudent= studentService.enrollStudent(student);
+		 Student savedStudent= studentService.enrollStudent(student);
+		LOGGER.info("Saving Student in StudentController");
 		return new ResponseEntity<Student>(savedStudent, HttpStatus.CREATED);
 	}
 	
@@ -42,6 +45,7 @@ public class StudentController {
 	@GetMapping
 	public List<Course> getAllCourse() {
 		List<Course> studentList = studentRepo.findAllCourses();
+		LOGGER.info("Fetching  student courses list in StudentController");
 		return studentList;
 	}
 	
@@ -50,8 +54,10 @@ public class StudentController {
 	public ResponseEntity<String> deleteStudentEnrollment(@PathVariable int enrollmentId) {	
 		try {
 			studentService.deleteByEnrollId(enrollmentId);
+			LOGGER.info("Deleting student by enrollmentId in StudentController");
 			return new ResponseEntity<String>("enrollmentId with "+enrollmentId+" deleted succesfully",HttpStatus.OK);
 		}catch(Exception ex) {
+			LOGGER.error("Exception happned while deleting student enrollmentId in StudentController");
 			return new ResponseEntity<String>("No enrollmentId Info found with "+enrollmentId+"",HttpStatus.BAD_REQUEST);
 		}
 	}

@@ -39,4 +39,16 @@ public class Course {
 	@JsonManagedReference
 	@OneToMany(mappedBy = "course")
 	List<Student> students;
+
+	public Course(String title, float fees, String description, String trainer, Date stDate, List<Student> students) {
+		super();
+		this.title = title;
+		this.fees = fees;
+		this.description = description;
+		this.trainer = trainer;
+		this.stDate = stDate;
+		this.students = students;
+	}
+	
+	
 }

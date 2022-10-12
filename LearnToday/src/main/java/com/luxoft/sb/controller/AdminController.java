@@ -1,6 +1,9 @@
 package com.luxoft.sb.controller;
 import java.util.List;
+import java.util.logging.Logger;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,17 +26,21 @@ import io.swagger.annotations.ApiOperation;
 public class AdminController {
 	@Autowired
 	private CourseService courseService;
+	
+	private static final Log LOGGER = LogFactory.getLog(AdminController.class);
 
 	@ApiOperation(value = "Save Course REST API")
 	@PostMapping("/saveCourse")
 	public ResponseEntity<Course> saveCourse(@RequestBody Course course) {
 		Course savedCourse = courseService.saveCourse(course);
+		LOGGER.info("Course Saved in Admin Controller Successfully");
 		return new ResponseEntity<Course>(savedCourse, HttpStatus.CREATED);
 	}
 
 	@ApiOperation(value = "Get All Courses REST API")
 	@GetMapping
 	public List<Course> getAllCourses() {
+		LOGGER.info("getting All Course in Admin Controller");
 		return courseService.getAllCourses();
 	}
 
@@ -41,8 +48,10 @@ public class AdminController {
 	@GetMapping("{courseId}")
 	public ResponseEntity getCourseById(@PathVariable("courseId") int courseId) {
 		try {
+			LOGGER.info("getting CourseById in Admin Controller");
 			return new ResponseEntity(courseService.getCourseById(courseId), HttpStatus.OK);
 		} catch (ResourceNotFoundException resourceNotFoundException) {
+			LOGGER.error("Exception happened getting CourseById in Admin Controller");
 			return new ResponseEntity(resourceNotFoundException.getMessage(), HttpStatus.NOT_FOUND);
 		}
 	}

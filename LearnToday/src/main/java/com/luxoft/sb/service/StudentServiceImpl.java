@@ -11,6 +11,7 @@ public class StudentServiceImpl implements StudentService {
 
 	@Autowired
 	private StudentRepository studentRepo;
+	
 	@Override
 	public Student enrollStudent(Student student) {
 		Student saved = null;

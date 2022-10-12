@@ -11,7 +11,6 @@ import com.luxoft.sb.exception.ResourceNotFoundException;
 
 @Service
 public class CourseServiceImpl implements CourseService {
-
 	@Autowired
 	private CourseRepoistory courseRepo;
 
@@ -32,8 +31,6 @@ public class CourseServiceImpl implements CourseService {
 				() -> new ResourceNotFoundException
 				("Searched Data not Found with courseId " + courseId + ""));
 		return course;
-	}
-	
-
+	}	
 }
 
